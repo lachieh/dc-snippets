@@ -1,10 +1,9 @@
-import { Injectable, Req } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import * as crypto from 'crypto';
 import { ConfigService } from '@nestjs/config';
 import { Token } from './entities/token.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { IsNull, Repository, UpdateResult } from 'typeorm';
-import { UserService } from '../user/user.service';
 import { User } from '../user/entities/user.entity';
 import { CreateTokenDto } from './dto/create-token.dto';
 
@@ -13,7 +12,6 @@ export class TokenService {
   constructor(
     private configService: ConfigService,
     @InjectRepository(Token) private tokenRepository: Repository<Token>,
-    private userService: UserService,
   ) {}
 
   findAllByUser(user: User): Promise<Token[]> {
@@ -22,19 +20,29 @@ export class TokenService {
     });
   }
 
-  create(user: User, name: string): Promise<Token> {
+  async create(user: User, name: string): Promise<Token> {
     const tokenDto: CreateTokenDto = {
       token: this.encrypt(user.uid),
       name,
-      user,
+      user: Promise.resolve(user),
     };
     const token = this.tokenRepository.create(tokenDto);
     return this.tokenRepository.save(token);
   }
 
-  findUser(hash: string): Promise<User> {
-    const id = this.decrypt(hash);
-    return this.userService.findOne(+id);
+  async validateToken(token: string): Promise<Token> {
+    let uid;
+    try {
+      uid = this.decrypt(token);
+    } catch (e) {
+      return null;
+    }
+    const tokenEntity = await this.tokenRepository.findOne({
+      where: { token, deletedAt: IsNull() },
+    });
+    if ((await tokenEntity.user).uid == uid) {
+      return tokenEntity;
+    }
   }
 
   remove(id: number): Promise<UpdateResult> {

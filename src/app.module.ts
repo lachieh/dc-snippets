@@ -4,9 +4,12 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
+import { UserModule } from './user/user.module';
 import { User } from './user/entities/user.entity';
 import { TokenModule } from './token/token.module';
 import { Token } from './token/entities/token.entity';
+import { SnippetModule } from './snippet/snippet.module';
+import { Snippet } from './snippet/entities/snippet.entity';
 
 @Module({
   imports: [
@@ -17,11 +20,13 @@ import { Token } from './token/entities/token.entity';
       database: 'dc-snippets',
       synchronize: true,
       logging: false,
-      entities: [User, Token],
+      entities: [User, Token, Snippet],
     }),
     ConfigModule.forRoot(),
     AuthModule,
+    UserModule,
     TokenModule,
+    SnippetModule,
   ],
   controllers: [AppController],
   providers: [AppService],

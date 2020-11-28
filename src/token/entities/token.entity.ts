@@ -21,7 +21,7 @@ export class Token {
   token!: string;
 
   @ManyToOne(() => User, (user) => user.tokens)
-  user: User;
+  user: Promise<User>;
 
   @CreateDateColumn()
   createdAt!: Date;

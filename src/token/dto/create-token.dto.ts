@@ -3,7 +3,7 @@ import { User } from '../../user/entities/user.entity';
 
 export class CreateTokenDto {
   @IsNotEmpty()
-  user: User;
+  user: Promise<User>;
 
   @IsNotEmpty()
   token: string;

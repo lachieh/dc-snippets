@@ -1,5 +1,6 @@
 import { Profile } from 'passport-github2';
 import { Token } from '../../token/entities/token.entity';
+import { Snippet } from '../../snippet/entities/snippet.entity';
 import {
   Column,
   CreateDateColumn,
@@ -28,6 +29,9 @@ export class User {
 
   @OneToMany(() => Token, (token) => token.user, { cascade: true })
   tokens: Promise<Token[]>;
+
+  @OneToMany(() => Snippet, (snippet) => snippet.user, { cascade: true })
+  snippets: Promise<Snippet[]>;
 
   @CreateDateColumn()
   createdAt!: Date;
