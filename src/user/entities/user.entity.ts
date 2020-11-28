@@ -1,8 +1,10 @@
 import { Profile } from 'passport-github2';
+import { Token } from '../../token/entities/token.entity';
 import {
   Column,
   CreateDateColumn,
   Entity,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -23,6 +25,9 @@ export class User {
 
   @Column('jsonb')
   profile!: Profile;
+
+  @OneToMany(() => Token, (token) => token.user, { cascade: true })
+  tokens: Promise<Token[]>;
 
   @CreateDateColumn()
   createdAt!: Date;

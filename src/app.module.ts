@@ -5,6 +5,8 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
 import { User } from './user/entities/user.entity';
+import { TokenModule } from './token/token.module';
+import { Token } from './token/entities/token.entity';
 
 @Module({
   imports: [
@@ -15,10 +17,11 @@ import { User } from './user/entities/user.entity';
       database: 'dc-snippets',
       synchronize: true,
       logging: false,
-      entities: [User],
+      entities: [User, Token],
     }),
-    AuthModule,
     ConfigModule.forRoot(),
+    AuthModule,
+    TokenModule,
   ],
   controllers: [AppController],
   providers: [AppService],
