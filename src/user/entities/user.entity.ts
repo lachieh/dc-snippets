@@ -13,20 +13,20 @@ export class User {
   id: number;
 
   @Column({ unique: true })
-  uid: string;
+  uid!: string;
 
   @Column()
-  provider: string;
+  provider!: string;
 
   @Column()
-  displayName: string;
+  displayName!: string;
 
   @Column('jsonb')
-  profile: Profile;
+  profile!: Profile;
 
   @CreateDateColumn()
-  createdAt: Date;
+  createdAt!: Date;
 
   @UpdateDateColumn()
-  updatedAt: Date;
+  updatedAt!: Date;
 }
