@@ -3,10 +3,10 @@
    "host": "localhost",
    "port": 5432,
    "database": "dc-snippets",
-   "synchronize": false,
+   "synchronize": true,
    "logging": false,
    "entities": [
-      "src/**/*/entity.ts"
+      "src/**/*.entity.{ts,js}"
    ],
    "migrations": [
       "src/migration/**/*.ts"
