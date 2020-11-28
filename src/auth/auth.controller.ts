@@ -1,17 +1,17 @@
-import { Controller, Get, Post, Request, UseGuards } from '@nestjs/common';
-import { AuthGuard } from '@nestjs/passport';
+import { Controller, Get, Post, Request, Res, UseGuards } from '@nestjs/common';
+import { GithubGuard } from './github-auth.guard';
 
 @Controller('/auth')
 export class AuthController {
   @Post('/github/login')
-  @UseGuards(AuthGuard('github'))
+  @UseGuards(GithubGuard)
   async githubLogin(@Request() req) {
     return req.user;
   }
 
   @Get('/github/callback')
-  @UseGuards(AuthGuard('github'))
-  async githubLoginCallback(@Request() req) {
-    return req.user;
+  @UseGuards(GithubGuard)
+  async githubLoginCallback(@Res() res) {
+    return res.redirect('/');
   }
 }

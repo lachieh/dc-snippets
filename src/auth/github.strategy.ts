@@ -2,8 +2,8 @@ import { Profile, Strategy } from 'passport-github2';
 import { AbstractStrategy, PassportStrategy } from '@nestjs/passport';
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { UserService } from '../../user/user.service';
-import { CreateUserDto } from '../../user/dto/create-user.dto';
+import { UserService } from '../user/user.service';
+import { CreateUserDto } from '../user/dto/create-user.dto';
 
 @Injectable()
 export class GithubStrategy
