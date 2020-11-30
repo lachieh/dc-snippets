@@ -10,6 +10,8 @@ import { TokenModule } from './token/token.module';
 import { Token } from './token/entities/token.entity';
 import { SnippetModule } from './snippet/snippet.module';
 import { Snippet } from './snippet/entities/snippet.entity';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { join } from 'path';
 
 @Module({
   imports: [
@@ -23,6 +25,9 @@ import { Snippet } from './snippet/entities/snippet.entity';
       entities: [User, Token, Snippet],
     }),
     ConfigModule.forRoot(),
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '../.', 'client/build'),
+    }),
     AuthModule,
     UserModule,
     TokenModule,

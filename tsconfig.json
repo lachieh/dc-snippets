@@ -11,5 +11,7 @@
       "emitDecoratorMetadata": true,
       "experimentalDecorators": true,
       "sourceMap": true
-   }
+   },
+   "include": ["src", "test"],
+   "exclude": ["client"]
 }
