@@ -15,7 +15,7 @@ import { CreateSnippetDto } from './dto/create-snippet.dto';
 import { UpdateSnippetDto } from './dto/update-snippet.dto';
 import { TokenGuard } from '../auth/token.guard';
 
-@Controller('snippet')
+@Controller('api/v1/snippet')
 @UseGuards(TokenGuard)
 export class SnippetController {
   constructor(private readonly snippetService: SnippetService) {}
