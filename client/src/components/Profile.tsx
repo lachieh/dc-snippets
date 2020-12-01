@@ -52,6 +52,7 @@ export default function Profile(props: Props) {
         aria-orientation="vertical"
         aria-labelledby="user-menu"
         animate={open ? 'open' : 'closed'}
+        initial="closed"
         variants={variants}
         transition={transition}
       >

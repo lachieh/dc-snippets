@@ -12,7 +12,7 @@ export default function NavBar() {
     },
     {
       href: '#',
-      name: 'Dashboard',
+      name: 'App',
       active: true,
     },
   ];
@@ -27,7 +27,7 @@ export default function NavBar() {
   return (
     <nav className="bg-brand-dark">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16 border-b border-brand border-solid">
+        <div className="flex items-center justify-between h-16 border-b border-brand-darker border-solid">
           <div className="flex items-center">
             <div className="flex-shrink-0">
               <a href="/">
