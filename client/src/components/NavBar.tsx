@@ -27,7 +27,7 @@ export default function NavBar() {
   return (
     <nav className="bg-brand-dark">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
+        <div className="flex items-center justify-between h-16 border-b border-brand border-solid">
           <div className="flex items-center">
             <div className="flex-shrink-0">
               <a href="/">
@@ -55,10 +55,19 @@ export default function NavBar() {
           </div>
           <div className="hidden md:block">
             <div className="ml-4 flex items-center md:ml-6">
-              <Profile user={user} />
+              {user ? (
+                <Profile user={user} />
+              ) : (
+                <a
+                  href="/auth/github/login"
+                  className="ml-8 whitespace-nowrap px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-brand hover:bg-brand-light"
+                >
+                  Sign In
+                </a>
+              )}
             </div>
           </div>
-          <div className="-mr-2 flex md:hidden">
+          <div className="flex md:hidden">
             {/* <!-- Mobile menu button --> */}
             <button
               onClick={() => setMenuOpen(!menuOpen)}
@@ -77,14 +86,14 @@ export default function NavBar() {
                     stroke-linecap="round"
                     stroke-linejoin="round"
                     stroke-width="2"
-                    d="M4 6h16M4 12h16M4 18h16"
+                    d="M6 18L18 6M6 6l12 12"
                   />
                 ) : (
                   <path
                     stroke-linecap="round"
                     stroke-linejoin="round"
                     stroke-width="2"
-                    d="M6 18L18 6M6 6l12 12"
+                    d="M4 6h16M4 12h16M4 18h16"
                   />
                 )}
               </svg>
@@ -92,7 +101,7 @@ export default function NavBar() {
           </div>
         </div>
       </div>
-      <div className={`md:hidden ${menuOpen ? 'hidden' : 'block'}`}>
+      <div className={`md:hidden ${menuOpen ? 'block' : 'hidden'}`}>
         <ul className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
           {menuItems.map((item) => (
             <li>
@@ -108,33 +117,42 @@ export default function NavBar() {
           ))}
         </ul>
         <div className="pt-4 pb-3 border-t border-gray-700">
-          <div className="flex items-center px-5">
-            <div className="flex-shrink-0">
-              <img
-                className="h-10 w-10 rounded-full"
-                src={user.profilePic}
-                alt=""
-              />
-            </div>
-            <div className="ml-3">
-              <div className="text-base font-medium leading-none text-white">
-                {user.name}
+          {user ? (
+            <div className="flex items-center px-5">
+              <div className="flex-shrink-0">
+                <img
+                  className="h-10 w-10 rounded-full"
+                  src={user.profilePic}
+                  alt=""
+                />
               </div>
-              <div className="text-sm font-medium leading-none text-gray-400">
-                {user.email}
+              <div className="ml-3">
+                <div className="text-base font-medium leading-none text-white">
+                  {user.name}
+                </div>
+                <div className="text-sm font-medium leading-none text-gray-400">
+                  {user.email}
+                </div>
               </div>
             </div>
-          </div>
+          ) : (
+            <a
+              href="/auth/github/login"
+              className="ml-8 whitespace-nowrap px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-brand hover:bg-brand-light"
+            >
+              Sign In
+            </a>
+          )}
           <div className="mt-3 px-2 space-y-1">
             <a
               href="/profile"
-              className="block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700"
+              className="block px-3 py-2 rounded-md text-base font-medium text-white hover:bg-brand"
             >
               Your Profile
             </a>
             <a
               href="/logout"
-              className="block px-3 py-2 rounded-md text-base font-medium text-gray-400 hover:text-white hover:bg-gray-700"
+              className="block px-3 py-2 rounded-md text-base font-medium text-white hover:bg-brand"
             >
               Sign out
             </a>
