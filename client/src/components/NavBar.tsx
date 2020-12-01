@@ -1,19 +1,19 @@
 import { useState } from 'react';
+import { Link, NavLink, useLocation } from 'react-router-dom';
 import logoWrench from '../images/logo-wrench-white.png';
 import Profile from './Profile';
 
 export default function NavBar() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const location = useLocation();
   const menuItems = [
     {
-      href: '#',
+      href: '/docs',
       name: 'Docs',
-      active: false,
     },
     {
-      href: '#',
+      href: '/app',
       name: 'App',
-      active: true,
     },
   ];
 
@@ -30,25 +30,27 @@ export default function NavBar() {
         <div className="flex items-center justify-between h-16 border-b border-brand-darker border-solid">
           <div className="flex items-center">
             <div className="flex-shrink-0">
-              <a href="/">
+              <Link to="/">
                 <img
                   className="h-8 w-8"
                   src={logoWrench}
                   alt="DC Snippets API"
                 />
-              </a>
+              </Link>
             </div>
             <div className="hidden md:block">
               <div className="ml-4 flex items-baseline space-x-4">
                 {menuItems.map((item) => (
-                  <a
-                    href={item.href}
+                  <NavLink
+                    to={item.href}
                     className={`px-3 py-2 rounded-md text-sm font-medium text-white ${
-                      item.active ? 'bg-brand-darker' : 'hover:bg-brand'
+                      location.pathname.match(item.href)
+                        ? 'bg-brand-darker'
+                        : 'hover:bg-brand'
                     }`}
                   >
                     {item.name}
-                  </a>
+                  </NavLink>
                 ))}
               </div>
             </div>
@@ -105,14 +107,16 @@ export default function NavBar() {
         <ul className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
           {menuItems.map((item) => (
             <li>
-              <a
-                href={item.href}
+              <Link
+                to={item.href}
                 className={`block px-3 py-2 rounded-md text-base font-medium text-white ${
-                  item.active ? 'bg-brand-darker' : 'hover:bg-brand'
+                  location.pathname.match(item.href)
+                    ? 'bg-brand-darker'
+                    : 'hover:bg-brand'
                 }`}
               >
                 {item.name}
-              </a>
+              </Link>
             </li>
           ))}
         </ul>
@@ -144,12 +148,13 @@ export default function NavBar() {
             </a>
           )}
           <div className="mt-3 px-2 space-y-1">
-            <a
-              href="/profile"
+            <NavLink
+              to="/profile"
               className="block px-3 py-2 rounded-md text-base font-medium text-white hover:bg-brand"
+              activeClassName="bg-brand-darker"
             >
               Your Profile
-            </a>
+            </NavLink>
             <a
               href="/logout"
               className="block px-3 py-2 rounded-md text-base font-medium text-white hover:bg-brand"

@@ -1,9 +1,20 @@
 import { useRef, useState } from 'react';
+import { NavLink, useLocation } from 'react-router-dom';
 import { useClickOutside } from '../hooks/useClickOutside';
 
-export default function Sidebar() {
+interface MenuItem {
+  name: string;
+  href: string;
+}
+
+interface SidebarProps {
+  items: MenuItem[];
+}
+
+export default function Sidebar({ items }: SidebarProps) {
   const [open, setOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
+  const location = useLocation();
 
   useClickOutside(menuRef, () => setOpen(false));
 
@@ -11,22 +22,20 @@ export default function Sidebar() {
     <nav className="w-full md:w-3/12 pb-2 md:py-6 pr-0 md:pr-4">
       <div className="hidden md:block">
         <ul>
-          <li>
-            <a
-              className="block font-bold text-lg px-2 py-2 mb-2 rounded-lg text-brand bg-brand-lighter"
-              href="/dashboard"
-            >
-              Dashboard
-            </a>
-          </li>
-          <li>
-            <a
-              className="block font-bold text-lg px-2 py-2 mb-2 rounded-lg hover:bg-brand-light hover:text-white"
-              href="/projects"
-            >
-              Projects
-            </a>
-          </li>
+          {items.map((item) => (
+            <li>
+              <NavLink
+                className={`block font-bold text-lg px-2 py-2 mb-2 rounded-lg ${
+                  location.pathname.match(item.href) ||
+                  'hover:bg-brand-light hover:text-white'
+                }`}
+                activeClassName="text-brand bg-brand-lighter cursor-default"
+                to={item.href}
+              >
+                {item.name}
+              </NavLink>
+            </li>
+          ))}
         </ul>
       </div>
       <div className="md:hidden" ref={menuRef}>
@@ -36,7 +45,10 @@ export default function Sidebar() {
           }}
           className="flex w-full justify-between items-center font-bold text-lg px-2 py-2 mb-2 rounded-lg text-brand bg-brand-lighter"
         >
-          <span>Active Link</span>
+          <span>
+            {items.find((item) => location.pathname.match(item.href))?.name ||
+              'Navigation'}
+          </span>
           <svg
             viewBox="0 0 20 20"
             className={`h-6 fill-current transition-transform transform ${
@@ -50,22 +62,18 @@ export default function Sidebar() {
           </svg>
         </button>
         <ul className={open ? 'block' : 'hidden'}>
-          <li>
-            <a
-              className="block font-bold text-lg px-2 py-2 mb-2 rounded-lg hover:bg-brand-light hover:text-white"
-              href="/dashboard"
-            >
-              Dashboard
-            </a>
-          </li>
-          <li>
-            <a
-              className="block font-bold text-lg px-2 py-2 mb-2 rounded-lg hover:bg-brand-light hover:text-white"
-              href="/projects"
-            >
-              Projects
-            </a>
-          </li>
+          {items
+            .filter((item) => !location.pathname.match(item.href))
+            .map((item) => (
+              <li>
+                <NavLink
+                  className="block font-bold text-lg px-2 py-2 mb-2 rounded-lg hover:bg-brand-light hover:text-white"
+                  to={item.href}
+                >
+                  {item.name}
+                </NavLink>
+              </li>
+            ))}
         </ul>
       </div>
     </nav>
