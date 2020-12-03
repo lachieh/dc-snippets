@@ -1,9 +1,9 @@
-import { Controller, Get, Post, Body, Put, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Put, Param, Delete, Req, Res } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 
-@Controller('user')
+@Controller('api/v1/user')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
@@ -18,7 +18,14 @@ export class UserController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
+  findOne(@Param('id') id: string, @Req() req, @Res({ passthrough: true }) res) {
+    if (id === 'current') {
+      if (req?.user?.id) {
+        return this.userService.findOne(req.user.id);
+      }
+      res.status(401);
+      return null;
+    }
     return this.userService.findOne(+id);
   }
 

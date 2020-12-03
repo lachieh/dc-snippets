@@ -1,16 +1,15 @@
 import { motion } from 'framer-motion';
 import { useRef, useState } from 'react';
 import { useClickOutside } from '../hooks/useClickOutside';
+import ApiService, { User } from '../api';
 
 interface Props {
-  user: {
-    name: string;
-    email: string;
-    profilePic: string;
-  };
+  user: User;
 }
 
 export default function Profile(props: Props) {
+  const apiService = new ApiService();
+  const logoutUrl = apiService.getLoginUrl();
   const { user } = props;
   const menuRef = useRef<HTMLDivElement>(null);
   const [open, setOpen] = useState(false);
@@ -43,7 +42,11 @@ export default function Profile(props: Props) {
           aria-haspopup="true"
         >
           <span className="sr-only">Open user menu</span>
-          <img className="h-8 w-8 rounded-full" src={user.profilePic} alt="" />
+          <img
+            className="h-8 w-8 rounded-full"
+            src={user.profile.photos?.[0].value || ''}
+            alt=""
+          />
         </button>
       </div>
       <motion.div
@@ -57,7 +60,7 @@ export default function Profile(props: Props) {
         transition={transition}
       >
         <span className="block px-4 py-2 text-sm font-bold text-brand-dark bg-brand-light rounded-t-md">
-          {user.name}
+          {user.displayName}
         </span>
         <a
           href="/profile"
@@ -67,7 +70,7 @@ export default function Profile(props: Props) {
           Your Profile
         </a>
         <a
-          href="/logout"
+          href={logoutUrl}
           className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
           role="menuitem"
         >

@@ -2,7 +2,7 @@ import { useRef, useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import { useClickOutside } from '../hooks/useClickOutside';
 
-interface MenuItem {
+export interface MenuItem {
   name: string;
   href: string;
 }
@@ -11,7 +11,7 @@ interface SidebarProps {
   items: MenuItem[];
 }
 
-export default function Sidebar({ items }: SidebarProps) {
+export function Sidebar({ items }: SidebarProps) {
   const [open, setOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
   const location = useLocation();

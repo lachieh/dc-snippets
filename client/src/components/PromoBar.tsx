@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import logoType from '../images/digitalcrafts-logo-white-y.png';
 
 export default function PromoBar() {

@@ -1,5 +1,4 @@
-import DefaultLayout from '../layouts/Default';
-import Sidebar from '../components/Sidebar';
+import WithSidebarLayout from '../layouts/WithSidebarLayout';
 
 export default function Dashboard() {
   const menuItems = [
@@ -13,13 +12,8 @@ export default function Dashboard() {
     },
   ];
   return (
-    <DefaultLayout title="Dashboard">
-      <div className="flex flex-col md:flex-row">
-        <Sidebar items={menuItems} />
-        <section className="w-full md:w-9/12 py-8 px-4 bg-white rounded-md shadow-lg">
-          Content
-        </section>
-      </div>
-    </DefaultLayout>
+    <WithSidebarLayout title="Dashboard" menuItems={menuItems}>
+      Content
+    </WithSidebarLayout>
   );
 }

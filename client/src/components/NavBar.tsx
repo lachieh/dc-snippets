@@ -2,8 +2,14 @@ import { useState } from 'react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
 import logoWrench from '../images/logo-wrench-white.png';
 import Profile from './Profile';
+import ApiService from '../api';
+import { useUser } from './UserContext';
 
 export default function NavBar() {
+  const [{ user }] = useUser();
+  const apiService = new ApiService();
+  const loginUrl = apiService.getLoginUrl();
+  const logoutUrl = apiService.getLoginUrl();
   const [menuOpen, setMenuOpen] = useState(false);
   const location = useLocation();
   const menuItems = [
@@ -16,13 +22,6 @@ export default function NavBar() {
       name: 'App',
     },
   ];
-
-  const user = {
-    name: 'Max Hadden',
-    email: 'max@jake.com',
-    profilePic:
-      'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-  };
 
   return (
     <nav className="bg-brand-dark">
@@ -60,12 +59,14 @@ export default function NavBar() {
               {user ? (
                 <Profile user={user} />
               ) : (
-                <a
-                  href="/auth/github/login"
-                  className="ml-8 whitespace-nowrap px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-brand hover:bg-brand-light"
-                >
-                  Sign In
-                </a>
+                <form action={loginUrl} method="POST">
+                  <button
+                    type="submit"
+                    className="ml-8 whitespace-nowrap px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-brand hover:bg-brand-light"
+                  >
+                    Sign In
+                  </button>
+                </form>
               )}
             </div>
           </div>
@@ -73,7 +74,7 @@ export default function NavBar() {
             {/* <!-- Mobile menu button --> */}
             <button
               onClick={() => setMenuOpen(!menuOpen)}
-              className="bg-gray-800 inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
+              className="bg-brand-darker inline-flex items-center justify-center p-2 rounded-md text-white hover:bg-brand focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white"
             >
               <span className="sr-only">Open main menu</span>
               <svg
@@ -120,32 +121,36 @@ export default function NavBar() {
             </li>
           ))}
         </ul>
-        <div className="pt-4 pb-3 border-t border-gray-700">
+        <div className="pt-4 pb-3 bg-brand-darker">
           {user ? (
             <div className="flex items-center px-5">
               <div className="flex-shrink-0">
                 <img
                   className="h-10 w-10 rounded-full"
-                  src={user.profilePic}
+                  src={user.profile.photos?.[0].value || ''}
                   alt=""
                 />
               </div>
               <div className="ml-3">
                 <div className="text-base font-medium leading-none text-white">
-                  {user.name}
+                  {user.displayName}
                 </div>
-                <div className="text-sm font-medium leading-none text-gray-400">
-                  {user.email}
-                </div>
+                {user.profile.emails?.[0].value && (
+                  <div className="text-sm font-medium leading-none text-gray-400">
+                    {user.profile.emails[0].value}
+                  </div>
+                )}
               </div>
             </div>
           ) : (
-            <a
-              href="/auth/github/login"
-              className="ml-8 whitespace-nowrap px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-brand hover:bg-brand-light"
-            >
-              Sign In
-            </a>
+            <form action={loginUrl} method="POST">
+              <button
+                type="submit"
+                className="ml-8 whitespace-nowrap px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-brand hover:bg-brand-light"
+              >
+                Sign In
+              </button>
+            </form>
           )}
           <div className="mt-3 px-2 space-y-1">
             <NavLink
@@ -156,7 +161,7 @@ export default function NavBar() {
               Your Profile
             </NavLink>
             <a
-              href="/logout"
+              href={logoutUrl}
               className="block px-3 py-2 rounded-md text-base font-medium text-white hover:bg-brand"
             >
               Sign out
