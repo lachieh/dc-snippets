@@ -32,12 +32,6 @@
     "postinstall": "grep -q '^SKIP_PREFLIGHT_CHECK=' .env || echo 'SKIP_PREFLIGHT_CHECK=true' >> .env",
     "postbuild": "mkdir -p ../build/client && cp -R build ../build/client/"
   },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
-  },
   "browserslist": {
     "production": [
       ">0.2%",

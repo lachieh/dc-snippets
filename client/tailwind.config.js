@@ -17,21 +17,21 @@ module.exports = {
         lemon: {
           light: '#fceba4',
           DEFAULT: '#fade65',
-          dark: '#f5be00'
+          dark: '#f5be00',
         },
         rose: {
           light: '#e190ac',
           DEFAULT: '#cd4e76',
-          dark: '#b6375d'
+          dark: '#b6375d',
         },
-      }
+      },
     },
   },
   variants: {
     extend: {},
   },
   plugins: [],
-}
+};
 
 // #213D48 - Dark Teal
 // #152A2D - Darkest Teal
