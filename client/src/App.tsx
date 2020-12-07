@@ -4,6 +4,8 @@ import Dashboard from './pages/Dashboard';
 import Projects from './pages/Projects';
 import Profile from './pages/Profile';
 import { UserContextProvider } from './components/UserContext';
+import React from 'react';
+import ProtectedRoute from './components/ProtectedRoute';
 
 function App() {
   return (
@@ -13,9 +15,9 @@ function App() {
         <Route path="/app" exact>
           <Redirect to="/app/dashboard" />
         </Route>
-        <Route path="/app/dashboard" component={Dashboard} />
-        <Route path="/app/projects" component={Projects} />
-        <Route path="/profile" component={Profile} />
+        <ProtectedRoute path="/app/dashboard" component={Dashboard} />
+        <ProtectedRoute path="/app/projects" component={Projects} />
+        <ProtectedRoute path="/profile" component={Profile} />
         <Route>
           <Redirect to="/" />
         </Route>
