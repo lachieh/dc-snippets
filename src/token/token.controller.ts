@@ -11,7 +11,7 @@ import {
 import { TokenService } from './token.service';
 import { AuthenticatedGuard } from '../auth/authenticated.guard';
 
-@Controller('token')
+@Controller('api/v1/token')
 export class TokenController {
   constructor(private readonly tokenService: TokenService) {}
 

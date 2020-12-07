@@ -9,7 +9,7 @@ interface Props {
 
 export default function Profile(props: Props) {
   const apiService = new ApiService();
-  const logoutUrl = apiService.getLoginUrl();
+  const logoutUrl = apiService.getLogoutUrl();
   const { user } = props;
   const menuRef = useRef<HTMLDivElement>(null);
   const [open, setOpen] = useState(false);

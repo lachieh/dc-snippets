@@ -1,17 +1,26 @@
-import { Controller, Get, Post, Request, Res, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Req, Res, UseGuards } from '@nestjs/common';
 import { GithubGuard } from './github-auth.guard';
+import { ConfigService } from '@nestjs/config';
 
 @Controller('/auth')
 export class AuthController {
+  constructor(private config: ConfigService) {}
+
   @Post('/github/login')
   @UseGuards(GithubGuard)
-  async githubLogin(@Request() req) {
+  async githubLogin(@Req() req) {
     return req.user;
   }
 
   @Get('/github/callback')
   @UseGuards(GithubGuard)
   async githubLoginCallback(@Res() res) {
-    return res.redirect('/');
+    return res.redirect(this.config.get('APP_FRONTEND_URL') || '/');
+  }
+
+  @Get('/github/logout')
+  async githubLogout(@Req() req, @Res() res) {
+    req.logout();
+    return res.redirect(this.config.get('APP_FRONTEND_URL') || '/');
   }
 }

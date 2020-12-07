@@ -25,13 +25,13 @@ import { join } from 'path';
       entities: [User, Token, Snippet],
     }),
     ConfigModule.forRoot(),
-    ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '../.', 'client/build'),
-    }),
     AuthModule,
     UserModule,
     TokenModule,
     SnippetModule,
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '../.', 'client/build'),
+    }),
   ],
   controllers: [AppController],
   providers: [AppService],
