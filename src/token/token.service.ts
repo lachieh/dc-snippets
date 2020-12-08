@@ -24,9 +24,11 @@ export class TokenService {
     const tokenDto: CreateTokenDto = {
       token: this.encrypt(user.uid),
       name,
-      user: Promise.resolve(user),
+      user,
     };
+    console.log(tokenDto);
     const token = this.tokenRepository.create(tokenDto);
+    console.log(token);
     return this.tokenRepository.save(token);
   }
 

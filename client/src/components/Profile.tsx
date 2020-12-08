@@ -1,14 +1,14 @@
 import { motion } from 'framer-motion';
 import { useRef, useState } from 'react';
 import { useClickOutside } from '../hooks/useClickOutside';
-import ApiService, { User } from '../api';
+import useApi, { User } from '../api';
 
 interface Props {
   user: User;
 }
 
 export default function Profile(props: Props) {
-  const apiService = new ApiService();
+  const apiService = useApi();
   const logoutUrl = apiService.getLogoutUrl();
   const { user } = props;
   const menuRef = useRef<HTMLDivElement>(null);

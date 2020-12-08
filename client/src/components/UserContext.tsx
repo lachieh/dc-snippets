@@ -1,5 +1,4 @@
-import ApiService from '../api/index';
-import { User } from '../api/index';
+import useApi, { User } from '../api/index';
 import React, {
   createContext,
   PropsWithChildren,
@@ -50,12 +49,12 @@ export function UserContextProvider({ children }: PropsWithChildren<any>) {
   const [state, dispatch] = useReducer<Reducer<State, Action>>(userReducer, {
     loading: true,
   });
+  const apiService = useApi();
 
   useEffect(() => {
     dispatch({
       type: Types.USER_LOADING,
     });
-    const apiService = new ApiService();
     apiService.getCurrentUser().then((user) => {
       if (!user) {
         dispatch({

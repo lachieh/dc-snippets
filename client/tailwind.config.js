@@ -21,14 +21,18 @@ module.exports = {
           darker: '#152A2D',
         },
         lemon: {
+          lighter: '#fef8db',
           light: '#fceba4',
           DEFAULT: '#fade65',
-          dark: '#f5be00',
+          dark: '#dca81a',
+          darker: '#a36900',
         },
         rose: {
+          lighter: '#ecbbcd',
           light: '#e190ac',
           DEFAULT: '#cd4e76',
           dark: '#b6375d',
+          darker: '#8b2f51'
         },
       },
     },

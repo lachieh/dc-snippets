@@ -1,6 +1,6 @@
 import { Profile } from 'passport-github2';
 
-export default class ApiService {
+class ApiService {
   url = process.env.REACT_APP_API_URL || '';
 
   public getLoginUrl(): string {
@@ -20,20 +20,41 @@ export default class ApiService {
   }
 
   public getProjects(): Promise<Token[]> {
-    return this.sendRequest('/api/v1/user/current')
+    return this.sendRequest('/api/v1/token')
       .then((res) => (res.status > 400 ? [] : res.json()))
       .then((data) => {
         return (data as Token[]) || [];
       });
   }
 
-  private sendRequest(url: string, body?: string): Promise<Response> {
+  public createProject(name?: string): Promise<Token> {
+    return this.sendRequest('/api/v1/token', 'POST', { name })
+      .then((res) => (res.status > 400 ? null : res.json()))
+      .then((data) => {
+        return (data as Token) || null;
+      });
+  }
+
+  private sendRequest(
+    url: string,
+    method: Method = 'GET',
+    body?: Record<string, unknown>,
+  ): Promise<Response> {
     return fetch(this.url + url, {
       credentials: 'include',
-      body,
+      method,
+      body: JSON.stringify(body) || null,
       headers: { 'Content-Type': 'application/json' },
     });
   }
+}
+
+type Method = 'POST' | 'GET' | 'PUT' | 'PATCH' | 'DELETE';
+
+const apiService = new ApiService();
+
+export default function useApi() {
+  return apiService;
 }
 
 export interface User {

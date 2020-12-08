@@ -2,12 +2,12 @@ import { useState } from 'react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
 import logoWrench from '../images/logo-wrench-white.png';
 import Profile from './Profile';
-import ApiService from '../api';
 import { useUser } from './UserContext';
+import useApi from '../api';
 
 export default function NavBar() {
   const [{ user }] = useUser();
-  const apiService = new ApiService();
+  const apiService = useApi();
   const loginUrl = apiService.getLoginUrl();
   const logoutUrl = apiService.getLoginUrl();
   const [menuOpen, setMenuOpen] = useState(false);
