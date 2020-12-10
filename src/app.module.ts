@@ -31,6 +31,7 @@ import { join } from 'path';
     SnippetModule,
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '../.', 'client/build'),
+      exclude: ['/api/*'],
     }),
   ],
   controllers: [AppController],
