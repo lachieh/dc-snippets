@@ -9,6 +9,7 @@ import {
   UseGuards,
   Req,
   Res,
+  HttpCode,
 } from '@nestjs/common';
 import { SnippetService } from './snippet.service';
 import { CreateSnippetDto } from './dto/create-snippet.dto';
@@ -49,22 +50,44 @@ export class SnippetController {
   ) {
     const snippet = await this.snippetService.findOne(+id, req.locals.token);
     if (!snippet) {
-      return res.status(404).json({});
+      res.status(404);
+      return;
     }
     return snippet;
   }
 
   @Put(':id')
-  update(
+  async update(
     @Req() req,
+    @Res({ passthrough: true }) res,
     @Param('id') id: string,
     @Body() updateSnippetDto: UpdateSnippetDto,
   ) {
-    return this.snippetService.update(+id, req.locals.token, updateSnippetDto);
+    const token = req.locals.token;
+    const updated = await this.snippetService.update(
+      +id,
+      token,
+      updateSnippetDto,
+    );
+    if (!updated.affected) {
+      res.status(404);
+      return;
+    }
+    return this.snippetService.findOne(+id, token);
   }
 
   @Delete(':id')
-  remove(@Req() req, @Param('id') id: string) {
-    return this.snippetService.remove(+id, req.locals.token);
+  @HttpCode(204)
+  async remove(
+    @Req() req,
+    @Res({ passthrough: true }) res,
+    @Param('id') id: string,
+  ) {
+    const deleted = await this.snippetService.remove(+id, req.locals.token);
+    if (!deleted.affected) {
+      res.status(404);
+      return;
+    }
+    return;
   }
 }

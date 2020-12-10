@@ -14,9 +14,10 @@ export class TokenService {
     @InjectRepository(Token) private tokenRepository: Repository<Token>,
   ) {}
 
-  findAllByUser(user: User): Promise<Token[]> {
+  findAllByUser(user: User, eager = true): Promise<Token[]> {
     return this.tokenRepository.find({
       where: { user, deletedAt: IsNull() },
+      relations: eager ? ['snippets'] : [],
     });
   }
 
@@ -39,6 +40,7 @@ export class TokenService {
     }
     const tokenEntity = await this.tokenRepository.findOne({
       where: { token, deletedAt: IsNull() },
+      relations: ['user'],
     });
     if (tokenEntity?.user.uid == uid) {
       return tokenEntity;

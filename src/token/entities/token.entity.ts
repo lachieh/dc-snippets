@@ -22,13 +22,10 @@ export class Token {
   @Column({ unique: true })
   token!: string;
 
-  @ManyToOne(() => User, (user) => user.tokens, { eager: true })
+  @ManyToOne(() => User, (user) => user.tokens)
   user: User;
 
-  @OneToMany(() => Snippet, (snippet) => snippet.token, {
-    eager: true,
-    cascade: true,
-  })
+  @OneToMany(() => Snippet, (snippet) => snippet.token, { cascade: true })
   snippets: Snippet;
 
   @CreateDateColumn()

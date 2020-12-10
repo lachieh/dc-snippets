@@ -13,7 +13,7 @@ export class UserController {
   ) {
     if (id === 'current') {
       if (req?.user?.id) {
-        return this.userService.findOne(req.user.id);
+        return this.userService.findOne(req.user.id, true);
       }
       res.status(401);
       return null;

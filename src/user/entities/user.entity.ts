@@ -31,7 +31,7 @@ export class User {
   tokens: Promise<Token[]>;
 
   @OneToMany(() => Snippet, (snippet) => snippet.user, { cascade: true })
-  snippets: Promise<Snippet[]>;
+  snippets: Snippet[];
 
   @CreateDateColumn()
   createdAt!: Date;

@@ -32,11 +32,12 @@ export class UserService {
     return `This action returns all user`;
   }
 
-  findOne(id: number) {
+  findOne(id: number, eager = false) {
     return this.userRepository.findOne({
       where: {
         id,
       },
+      relations: eager ? ['tokens', 'tokens.snippets'] : [],
     });
   }
 
