@@ -13,29 +13,23 @@ export class SnippetService {
     @InjectRepository(Snippet) private snippetRepository: Repository<Snippet>,
   ) {}
 
-  create(body: CreateSnippetDto, token: Token) {
-    const snippetDto: CreateSnippetDto = {
-      name: body.name,
-      content: body.content,
-      token,
-      user: token.user,
-    };
+  create(snippetDto: CreateSnippetDto) {
     return this.snippetRepository.save(snippetDto);
   }
 
-  findAll(user: User) {
-    return this.snippetRepository.find({ where: { user } });
+  findAll(token: Token) {
+    return this.snippetRepository.find({ where: { token } });
   }
 
-  findOne(id: number, user: User) {
-    return this.snippetRepository.findOne(id, { where: { user } });
+  findOne(id: number, token: Token) {
+    return this.snippetRepository.findOne(id, { where: { token } });
   }
 
-  update(id: number, user: User, updateSnippetDto: UpdateSnippetDto) {
-    this.snippetRepository.update({ id, user }, updateSnippetDto);
+  update(id: number, token: Token, updateSnippetDto: UpdateSnippetDto) {
+    this.snippetRepository.update({ id, token }, updateSnippetDto);
   }
 
-  remove(id: number, user: User) {
-    this.snippetRepository.delete({ id, user });
+  remove(id: number, token: Token) {
+    this.snippetRepository.delete({ id, token });
   }
 }

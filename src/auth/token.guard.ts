@@ -23,7 +23,7 @@ export class TokenGuard implements CanActivate {
     if (!token) {
       throw new UnauthorizedException('Invalid API Key');
     }
-    req.user = await token.user;
+    req.user = token.user;
     req.locals = req.locals ?? {};
     req.locals.token = token;
     return true;

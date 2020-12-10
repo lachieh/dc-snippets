@@ -21,20 +21,35 @@ export class SnippetController {
   constructor(private readonly snippetService: SnippetService) {}
 
   @Post()
-  create(@Req() req, @Body() createSnippetDto: CreateSnippetDto) {
-    return this.snippetService.create(createSnippetDto, req.locals.token);
+  create(@Req() req, @Body() body: CreateSnippetDto) {
+    const { name, content } = body;
+    const createSnippetDto = {
+      name,
+      content,
+      token: req.locals.token,
+      user: req.user,
+    };
+    return this.snippetService.create(createSnippetDto);
   }
 
   @Get()
-  findAll(@Req() req) {
-    return this.snippetService.findAll(req.user.id);
+  async findAll(@Req() req, @Res({ passthrough: true }) res) {
+    const snippets = await this.snippetService.findAll(req.locals.token);
+    if (snippets.length === 0) {
+      return res.json([]);
+    }
+    return snippets;
   }
 
   @Get(':id')
-  async findOne(@Req() req, @Res() res, @Param('id') id: string) {
-    const snippet = await this.snippetService.findOne(+id, req.user.id);
+  async findOne(
+    @Req() req,
+    @Res({ passthrough: true }) res,
+    @Param('id') id: string,
+  ) {
+    const snippet = await this.snippetService.findOne(+id, req.locals.token);
     if (!snippet) {
-      return res.status(404).json();
+      return res.status(404).json({});
     }
     return snippet;
   }
@@ -45,11 +60,11 @@ export class SnippetController {
     @Param('id') id: string,
     @Body() updateSnippetDto: UpdateSnippetDto,
   ) {
-    return this.snippetService.update(+id, req.user.id, updateSnippetDto);
+    return this.snippetService.update(+id, req.locals.token, updateSnippetDto);
   }
 
   @Delete(':id')
   remove(@Req() req, @Param('id') id: string) {
-    return this.snippetService.remove(+id, req.user.id);
+    return this.snippetService.remove(+id, req.locals.token);
   }
 }
