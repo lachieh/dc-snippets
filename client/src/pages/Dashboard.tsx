@@ -4,7 +4,7 @@ export default function Dashboard() {
   const menuItems = [
     {
       name: 'Dashboard',
-      href: '/app/dashboard',
+      href: '/app',
     },
     {
       name: 'Projects',

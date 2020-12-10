@@ -8,7 +8,7 @@ import React, {
   useEffect,
 } from 'react';
 
-enum Types {
+export enum Types {
   USER_LOADING,
   USER_LOGIN_SUCCESS,
   USER_LOGIN_FAILURE,
@@ -52,9 +52,6 @@ export function UserContextProvider({ children }: PropsWithChildren<any>) {
   const apiService = useApi();
 
   useEffect(() => {
-    dispatch({
-      type: Types.USER_LOADING,
-    });
     apiService.getCurrentUser().then((user) => {
       if (!user) {
         dispatch({
@@ -67,7 +64,7 @@ export function UserContextProvider({ children }: PropsWithChildren<any>) {
         });
       }
     });
-  }, []);
+  }, [apiService]);
 
   return (
     <UserContext.Provider value={{ state, dispatch }}>
@@ -76,7 +73,7 @@ export function UserContextProvider({ children }: PropsWithChildren<any>) {
   );
 }
 
-export function useUser(): [State, (state: State, action: Action) => State] {
+export function useUser(): [State, (action: Action) => Action] {
   const { state, dispatch } = useContext(UserContext);
   return [state, dispatch];
 }

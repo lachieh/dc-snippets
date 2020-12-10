@@ -147,7 +147,7 @@ export default function NavBar() {
             <form action={loginUrl} method="POST">
               <button
                 type="submit"
-                className="ml-8 whitespace-nowrap px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-brand hover:bg-brand-light"
+                className="ml-5 whitespace-nowrap px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-brand hover:bg-brand-light"
               >
                 Sign In
               </button>

@@ -12,10 +12,7 @@ function App() {
     <UserContextProvider>
       <Switch>
         <Route path="/" exact component={Home} />
-        <Route path="/app" exact>
-          <Redirect to="/app/dashboard" />
-        </Route>
-        <ProtectedRoute path="/app/dashboard" component={Dashboard} />
+        <ProtectedRoute path="/app" exact component={Dashboard} />
         <ProtectedRoute path="/app/projects" component={Projects} />
         <ProtectedRoute path="/profile" component={Profile} />
         <Route>

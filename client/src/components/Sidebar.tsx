@@ -22,9 +22,10 @@ export function Sidebar({ items }: SidebarProps) {
     <nav className="w-full md:w-3/12 pb-2 md:py-6 pr-0 md:pr-4">
       <div className="hidden md:block">
         <ul>
-          {items.map((item) => (
-            <li>
+          {items.map((item, i) => (
+            <li key={i}>
               <NavLink
+                exact
                 className={`block font-bold text-lg px-2 py-2 mb-2 rounded-lg ${
                   location.pathname.match(item.href) ||
                   'hover:bg-brand-light hover:text-white'
@@ -46,8 +47,9 @@ export function Sidebar({ items }: SidebarProps) {
           className="flex w-full justify-between items-center font-bold text-lg px-2 py-2 mb-2 rounded-lg text-brand bg-brand-lighter"
         >
           <span>
-            {items.find((item) => location.pathname.match(item.href))?.name ||
-              'Navigation'}
+            {items.find((item) =>
+              location.pathname.match(new RegExp(`^${item.href}$`)),
+            )?.name || 'Navigation'}
           </span>
           <svg
             viewBox="0 0 20 20"
@@ -63,9 +65,11 @@ export function Sidebar({ items }: SidebarProps) {
         </button>
         <ul className={open ? 'block' : 'hidden'}>
           {items
-            .filter((item) => !location.pathname.match(item.href))
-            .map((item) => (
-              <li>
+            .filter(
+              (item) => !location.pathname.match(new RegExp(`^${item.href}$`)),
+            )
+            .map((item, i) => (
+              <li key={i}>
                 <NavLink
                   className="block font-bold text-lg px-2 py-2 mb-2 rounded-lg hover:bg-brand-light hover:text-white"
                   to={item.href}

@@ -11,6 +11,10 @@ module.exports = {
   darkMode: 'class', // or 'media' or 'class'
   theme: {
     extend: {
+      // Adds a new breakpoint in addition to the default breakpoints
+      screens: {
+        'xs': '480px',
+      },
       colors: {
         gray: colors.trueGray,
         brand: {

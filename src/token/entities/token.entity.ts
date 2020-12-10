@@ -4,10 +4,12 @@ import {
   DeleteDateColumn,
   Entity,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import {} from 'crypto';
 import { User } from '../../user/entities/user.entity';
+import { Snippet } from '../../snippet/entities/snippet.entity';
 
 @Entity()
 export class Token {
@@ -20,8 +22,14 @@ export class Token {
   @Column({ unique: true })
   token!: string;
 
-  @ManyToOne(() => User, (user) => user.tokens)
-  user: Promise<User> | User;
+  @ManyToOne(() => User, (user) => user.tokens, { eager: true })
+  user: User;
+
+  @OneToMany(() => Snippet, (snippet) => snippet.token, {
+    eager: true,
+    cascade: true,
+  })
+  snippets: Snippet;
 
   @CreateDateColumn()
   createdAt!: Date;

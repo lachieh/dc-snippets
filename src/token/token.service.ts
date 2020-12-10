@@ -26,9 +26,7 @@ export class TokenService {
       name,
       user,
     };
-    console.log(tokenDto);
     const token = this.tokenRepository.create(tokenDto);
-    console.log(token);
     return this.tokenRepository.save(token);
   }
 
@@ -42,9 +40,10 @@ export class TokenService {
     const tokenEntity = await this.tokenRepository.findOne({
       where: { token, deletedAt: IsNull() },
     });
-    if ((await tokenEntity.user).uid == uid) {
+    if (tokenEntity?.user.uid == uid) {
       return tokenEntity;
     }
+    return null;
   }
 
   remove(id: number): Promise<UpdateResult> {

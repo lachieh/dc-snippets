@@ -1,4 +1,5 @@
 import { User } from '../../user/entities/user.entity';
+import { Token } from '../../token/entities/token.entity';
 import {
   Column,
   CreateDateColumn,
@@ -21,6 +22,9 @@ export class Snippet {
 
   @ManyToOne(() => User, (user) => user.snippets)
   user: User;
+
+  @ManyToOne(() => Token, (token) => token.snippets)
+  token: Token;
 
   @CreateDateColumn()
   createdAt!: Date;

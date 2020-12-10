@@ -22,7 +22,7 @@ export class SnippetController {
 
   @Post()
   create(@Req() req, @Body() createSnippetDto: CreateSnippetDto) {
-    return this.snippetService.create(createSnippetDto, req.user.id);
+    return this.snippetService.create(createSnippetDto, req.locals.token);
   }
 
   @Get()

@@ -5,6 +5,7 @@ import { CreateSnippetDto } from './dto/create-snippet.dto';
 import { UpdateSnippetDto } from './dto/update-snippet.dto';
 import { Snippet } from './entities/snippet.entity';
 import { User } from '../user/entities/user.entity';
+import { Token } from '../token/entities/token.entity';
 
 @Injectable()
 export class SnippetService {
@@ -12,11 +13,12 @@ export class SnippetService {
     @InjectRepository(Snippet) private snippetRepository: Repository<Snippet>,
   ) {}
 
-  create(body: CreateSnippetDto, user: User) {
+  create(body: CreateSnippetDto, token: Token) {
     const snippetDto: CreateSnippetDto = {
       name: body.name,
       content: body.content,
-      user,
+      token,
+      user: token.user,
     };
     return this.snippetRepository.save(snippetDto);
   }

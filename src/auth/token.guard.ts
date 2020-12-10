@@ -4,7 +4,6 @@ import {
   Injectable,
   UnauthorizedException,
 } from '@nestjs/common';
-import { Request } from 'express';
 import { TokenService } from '../token/token.service';
 
 @Injectable()
@@ -12,7 +11,7 @@ export class TokenGuard implements CanActivate {
   constructor(private tokenService: TokenService) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
-    const req = context.switchToHttp().getRequest() as Request;
+    const req = context.switchToHttp().getRequest();
     if (!req.query?.apiKey) {
       throw new UnauthorizedException('API Key Required');
     }
@@ -25,6 +24,8 @@ export class TokenGuard implements CanActivate {
       throw new UnauthorizedException('Invalid API Key');
     }
     req.user = await token.user;
+    req.locals = req.locals ?? {};
+    req.locals.token = token;
     return true;
   }
 }

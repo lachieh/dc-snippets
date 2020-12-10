@@ -8,7 +8,7 @@ export default function Projects() {
   const menuItems: MenuItem[] = [
     {
       name: 'Dashboard',
-      href: '/app/dashboard',
+      href: '/app',
     },
     {
       name: 'Projects',
@@ -30,6 +30,13 @@ export default function Projects() {
     });
   };
 
+  const deleteProject = (id: number) => {
+    return apiService.destroyProject(id).then((result) => {
+      apiService.getProjects().then(setProjects);
+      return result;
+    });
+  };
+
   useEffect(() => {
     apiService.getProjects().then(setProjects);
   }, [apiService]);
@@ -43,8 +50,9 @@ export default function Projects() {
             token={project.token}
             title={project.name}
             id={project.id}
-            snippets={[]}
+            snippets={project.snippets}
             createdAt={new Date(project.createdAt)}
+            deleteProject={deleteProject}
           />
         ))}
 

@@ -35,6 +35,14 @@ class ApiService {
       });
   }
 
+  public destroyProject(id: number): Promise<boolean> {
+    return this.sendRequest(`/api/v1/token/${id}`, 'DELETE')
+      .then((res) => (res.status > 400 ? false : res.json()))
+      .then((data) => {
+        return data ? true : false;
+      });
+  }
+
   private sendRequest(
     url: string,
     method: Method = 'GET',
@@ -72,6 +80,17 @@ export interface Token {
   name?: string;
   token: string;
   user: User;
+  snippets: Snippet[];
   createdAt: Date;
   deletedAt?: Date;
+}
+
+export interface Snippet {
+  id: number;
+  name?: string;
+  content: string;
+  user: number;
+  token: number;
+  createdAt: Date;
+  updatedAt: Date;
 }
