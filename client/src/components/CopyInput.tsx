@@ -34,7 +34,7 @@ export default function CopyInput({ text, name }: Props) {
         onClick={copyText}
         className="border-l border-gray-400 h-full px-1"
       >
-        <span className="sr-only">Copy Token to Clipboard</span>
+        <span className="sr-only">Copy to Clipboard</span>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"

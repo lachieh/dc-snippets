@@ -4,17 +4,17 @@ import { Injectable } from '@nestjs/common';
 export class AppService {
   getHello(req): string {
     if (req.user) {
-      return req.user.tokens.then((tokens) => {
+      return req.user.projects.then((projects) => {
         return `
-          <form action="/token" method="POST">
+          <form action="/project" method="POST">
             <input type="hidden" name="name" value="test name" />
-            <button type="submit">Get New Token</button>
+            <button type="submit">Get New Project</button>
           </form>
-          ${tokens
-            .map((token) =>
-              token.deletedAt
+          ${projects
+            .map((project) =>
+              project.deletedAt
                 ? ''
-                : `<form action="/token/${token.id}/delete" method="POST"><button type="submit">Delete ${token.id}</button></form>`,
+                : `<form action="/project/${project.id}/delete" method="POST"><button type="submit">Delete ${project.id}</button></form>`,
             )
             .join('')}
         `;

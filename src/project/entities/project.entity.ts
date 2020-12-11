@@ -12,7 +12,7 @@ import { User } from '../../user/entities/user.entity';
 import { Snippet } from '../../snippet/entities/snippet.entity';
 
 @Entity()
-export class Token {
+export class Project {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -20,12 +20,12 @@ export class Token {
   name?: string;
 
   @Column({ unique: true })
-  token!: string;
+  project!: string;
 
-  @ManyToOne(() => User, (user) => user.tokens)
+  @ManyToOne(() => User, (user) => user.projects, { onDelete: 'CASCADE' })
   user: User;
 
-  @OneToMany(() => Snippet, (snippet) => snippet.token, { cascade: true })
+  @OneToMany(() => Snippet, (snippet) => snippet.project)
   snippets: Snippet;
 
   @CreateDateColumn()

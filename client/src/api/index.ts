@@ -19,24 +19,24 @@ class ApiService {
       });
   }
 
-  public getProjects(): Promise<Token[]> {
-    return this.sendRequest('/api/v1/token')
+  public getProjects(): Promise<Project[]> {
+    return this.sendRequest('/api/v1/project')
       .then((res) => (res.status > 400 ? [] : res.json()))
       .then((data) => {
-        return (data as Token[]) || [];
+        return (data as Project[]) || [];
       });
   }
 
-  public createProject(name?: string): Promise<Token> {
-    return this.sendRequest('/api/v1/token', 'POST', { name })
+  public createProject(name?: string): Promise<Project> {
+    return this.sendRequest('/api/v1/project', 'POST', { name })
       .then((res) => (res.status > 400 ? null : res.json()))
       .then((data) => {
-        return (data as Token) || null;
+        return (data as Project) || null;
       });
   }
 
   public destroyProject(id: number): Promise<boolean> {
-    return this.sendRequest(`/api/v1/token/${id}`, 'DELETE')
+    return this.sendRequest(`/api/v1/project/${id}`, 'DELETE')
       .then((res) => (res.status > 400 ? false : res.json()))
       .then((data) => {
         return data ? true : false;
@@ -75,10 +75,10 @@ export interface User {
   updatedAt: Date;
 }
 
-export interface Token {
+export interface Project {
   id: number;
   name?: string;
-  token: string;
+  project: string;
   user: User;
   snippets: Snippet[];
   createdAt: Date;
@@ -90,7 +90,7 @@ export interface Snippet {
   name?: string;
   content: string;
   user: number;
-  token: number;
+  project: number;
   createdAt: Date;
   updatedAt: Date;
 }

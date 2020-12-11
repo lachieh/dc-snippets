@@ -3,7 +3,7 @@ import { DateTime } from 'luxon';
 
 interface Props {
   title?: string;
-  token: string;
+  project: string;
   id: number;
   createdAt: Date;
   snippets?: any[];
@@ -12,7 +12,7 @@ interface Props {
 
 export default function ProjectTile({
   title,
-  token,
+  project,
   id,
   createdAt,
   snippets,
@@ -32,7 +32,7 @@ export default function ProjectTile({
           >
             API Key:
           </label>
-          <CopyInput name="apikey" text={token} />
+          <CopyInput name="apikey" text={project} />
         </div>
       </div>
       <div className="flex flex-wrap text-sm">

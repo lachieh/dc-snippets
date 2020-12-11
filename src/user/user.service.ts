@@ -37,7 +37,7 @@ export class UserService {
       where: {
         id,
       },
-      relations: eager ? ['tokens', 'tokens.snippets'] : [],
+      relations: eager ? ['projects', 'projects.snippets'] : [],
     });
   }
 

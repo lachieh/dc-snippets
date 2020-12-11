@@ -1,9 +1,9 @@
-import { Token } from '../../token/entities/token.entity';
+import { Project } from '../../project/entities/project.entity';
 import { User } from '../../user/entities/user.entity';
 
 export class CreateSnippetDto {
   name: string;
   content: string;
-  token: Token;
+  project: Project;
   user: User;
 }

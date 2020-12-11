@@ -1,5 +1,5 @@
 import { Profile } from 'passport-github2';
-import { Token } from '../../token/entities/token.entity';
+import { Project } from '../../project/entities/project.entity';
 import { Snippet } from '../../snippet/entities/snippet.entity';
 import {
   Column,
@@ -27,11 +27,8 @@ export class User {
   @Column('jsonb')
   profile!: Profile;
 
-  @OneToMany(() => Token, (token) => token.user, { cascade: true })
-  tokens: Promise<Token[]>;
-
-  @OneToMany(() => Snippet, (snippet) => snippet.user, { cascade: true })
-  snippets: Snippet[];
+  @OneToMany(() => Project, (project) => project.user)
+  projects: Promise<Project[]>;
 
   @CreateDateColumn()
   createdAt!: Date;

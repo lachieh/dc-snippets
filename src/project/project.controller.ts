@@ -8,28 +8,28 @@ import {
   Get,
   Body,
 } from '@nestjs/common';
-import { TokenService } from './token.service';
+import { ProjectService } from './project.service';
 import { AuthenticatedGuard } from '../auth/authenticated.guard';
 
-@Controller('api/v1/token')
-export class TokenController {
-  constructor(private readonly tokenService: TokenService) {}
+@Controller('api/v1/project')
+export class ProjectController {
+  constructor(private readonly projectService: ProjectService) {}
 
   @Post()
   @UseGuards(AuthenticatedGuard)
   create(@Req() req, @Body() body) {
-    return this.tokenService.create(req.user, body.name);
+    return this.projectService.create(req.user, body.name);
   }
 
   @Get()
   @UseGuards(AuthenticatedGuard)
   findAll(@Req() req) {
-    return this.tokenService.findAllByUser(req.user.id);
+    return this.projectService.findAllByUser(req.user.id);
   }
 
   @Delete(':id')
   @UseGuards(AuthenticatedGuard)
   remove(@Param('id') id: string) {
-    return this.tokenService.remove(+id);
+    return this.projectService.remove(+id);
   }
 }

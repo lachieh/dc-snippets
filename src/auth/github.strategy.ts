@@ -21,7 +21,7 @@ export class GithubStrategy
     });
   }
 
-  public async validate(accessToken, refreshToken, profile: Profile) {
+  public async validate(accessProject, refreshProject, profile: Profile) {
     const userDto: CreateUserDto = {
       uid: profile.id,
       displayName: profile.displayName,

@@ -1,7 +1,7 @@
 import { FormEvent, useEffect, useState } from 'react';
 import { MenuItem } from '../components/Sidebar';
 import WithSidebarLayout from '../layouts/WithSidebarLayout';
-import useApi, { Token } from '../api/index';
+import useApi, { Project } from '../api/index';
 import ProjectTile from '../components/ProjectTile';
 
 export default function Projects() {
@@ -16,7 +16,7 @@ export default function Projects() {
     },
   ];
 
-  const [projects, setProjects] = useState<Token[]>([]);
+  const [projects, setProjects] = useState<Project[]>([]);
   const [showForm, setShowForm] = useState(false);
   const [name, setName] = useState<string>('');
   const apiService = useApi();
@@ -47,7 +47,7 @@ export default function Projects() {
         {projects?.map((project) => (
           <ProjectTile
             key={project.id}
-            token={project.token}
+            project={project.project}
             title={project.name}
             id={project.id}
             snippets={project.snippets}

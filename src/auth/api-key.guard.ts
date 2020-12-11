@@ -4,11 +4,11 @@ import {
   Injectable,
   UnauthorizedException,
 } from '@nestjs/common';
-import { TokenService } from '../token/token.service';
+import { ProjectService } from '../project/project.service';
 
 @Injectable()
-export class TokenGuard implements CanActivate {
-  constructor(private tokenService: TokenService) {}
+export class ApiKeyGuard implements CanActivate {
+  constructor(private projectService: ProjectService) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const req = context.switchToHttp().getRequest();
@@ -16,16 +16,16 @@ export class TokenGuard implements CanActivate {
       throw new UnauthorizedException('API Key Required');
     }
 
-    const token = await this.tokenService.validateToken(
+    const project = await this.projectService.validateProject(
       req.query.apiKey as string,
     );
 
-    if (!token) {
+    if (!project) {
       throw new UnauthorizedException('Invalid API Key');
     }
-    req.user = token.user;
+    req.user = project.user;
     req.locals = req.locals ?? {};
-    req.locals.token = token;
+    req.locals.project = project;
     return true;
   }
 }

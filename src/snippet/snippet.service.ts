@@ -4,7 +4,7 @@ import { DeleteResult, Repository, UpdateResult } from 'typeorm';
 import { CreateSnippetDto } from './dto/create-snippet.dto';
 import { UpdateSnippetDto } from './dto/update-snippet.dto';
 import { Snippet } from './entities/snippet.entity';
-import { Token } from '../token/entities/token.entity';
+import { Project } from '../project/entities/project.entity';
 
 @Injectable()
 export class SnippetService {
@@ -16,28 +16,28 @@ export class SnippetService {
     const snippet = await this.snippetRepository.save(snippetDto);
     if (!eager) {
       delete snippet.user;
-      delete snippet.token;
+      delete snippet.project;
     }
     return snippet;
   }
 
-  findAll(token: Token): Promise<Snippet[]> {
-    return this.snippetRepository.find({ where: { token } });
+  findAll(project: Project): Promise<Snippet[]> {
+    return this.snippetRepository.find({ where: { project } });
   }
 
-  findOne(id: number, token: Token): Promise<Snippet> {
-    return this.snippetRepository.findOne(id, { where: { token } });
+  findOne(id: number, project: Project): Promise<Snippet> {
+    return this.snippetRepository.findOne(id, { where: { project } });
   }
 
   update(
     id: number,
-    token: Token,
+    project: Project,
     updateSnippetDto: UpdateSnippetDto,
   ): Promise<UpdateResult> {
-    return this.snippetRepository.update({ id, token }, updateSnippetDto);
+    return this.snippetRepository.update({ id, project }, updateSnippetDto);
   }
 
-  remove(id: number, token: Token): Promise<DeleteResult> {
-    return this.snippetRepository.delete({ id, token });
+  remove(id: number, project: Project): Promise<DeleteResult> {
+    return this.snippetRepository.delete({ id, project });
   }
 }

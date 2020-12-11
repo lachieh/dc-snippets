@@ -6,8 +6,8 @@ import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
 import { UserModule } from './user/user.module';
 import { User } from './user/entities/user.entity';
-import { TokenModule } from './token/token.module';
-import { Token } from './token/entities/token.entity';
+import { ProjectModule } from './project/project.module';
+import { Project } from './project/entities/project.entity';
 import { SnippetModule } from './snippet/snippet.module';
 import { Snippet } from './snippet/entities/snippet.entity';
 import { ServeStaticModule } from '@nestjs/serve-static';
@@ -22,12 +22,12 @@ import { join } from 'path';
       database: 'dc-snippets',
       synchronize: true,
       logging: false,
-      entities: [User, Token, Snippet],
+      entities: [User, Project, Snippet],
     }),
     ConfigModule.forRoot(),
     AuthModule,
     UserModule,
-    TokenModule,
+    ProjectModule,
     SnippetModule,
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '../.', 'client/build'),

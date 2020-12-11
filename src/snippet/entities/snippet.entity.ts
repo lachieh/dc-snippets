@@ -1,5 +1,5 @@
 import { User } from '../../user/entities/user.entity';
-import { Token } from '../../token/entities/token.entity';
+import { Project } from '../../project/entities/project.entity';
 import {
   Column,
   CreateDateColumn,
@@ -20,11 +20,10 @@ export class Snippet {
   @Column()
   content!: string;
 
-  @ManyToOne(() => User, (user) => user.snippets)
-  user: User;
-
-  @ManyToOne(() => Token, (token) => token.snippets)
-  token: Token;
+  @ManyToOne(() => Project, (project) => project.snippets, {
+    onDelete: 'CASCADE',
+  })
+  project: Project;
 
   @CreateDateColumn()
   createdAt!: Date;
