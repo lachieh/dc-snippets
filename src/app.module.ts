@@ -12,6 +12,8 @@ import { SnippetModule } from './snippet/snippet.module';
 import { Snippet } from './snippet/entities/snippet.entity';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { join } from 'path';
+import { ScheduleModule } from '@nestjs/schedule';
+import { CleanupModule } from './cleanup/cleanup.module';
 
 @Module({
   imports: [
@@ -25,10 +27,12 @@ import { join } from 'path';
       entities: [User, Project, Snippet],
     }),
     ConfigModule.forRoot(),
+    ScheduleModule.forRoot(),
     AuthModule,
     UserModule,
     ProjectModule,
     SnippetModule,
+    CleanupModule,
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '../.', 'client/build'),
       exclude: ['/api/*'],
