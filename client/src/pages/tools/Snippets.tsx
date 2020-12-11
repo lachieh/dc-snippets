@@ -1,21 +1,10 @@
 import { FormEvent, useEffect, useState } from 'react';
-import { MenuItem } from '../components/Sidebar';
-import WithSidebarLayout from '../layouts/WithSidebarLayout';
-import useApi, { Project } from '../api/index';
-import ProjectTile from '../components/ProjectTile';
+import WithSidebarLayout from '../../layouts/WithSidebarLayout';
+import useApi, { Project } from '../../api/index';
+import ProjectTile from '../../components/ProjectTile';
+import { sideBarItems } from '../../api/sidebarItems';
 
-export default function Projects() {
-  const menuItems: MenuItem[] = [
-    {
-      name: 'Dashboard',
-      href: '/app',
-    },
-    {
-      name: 'Projects',
-      href: '/app/projects',
-    },
-  ];
-
+export default function Snippets() {
   const [projects, setProjects] = useState<Project[]>([]);
   const [showForm, setShowForm] = useState(false);
   const [name, setName] = useState<string>('');
@@ -42,7 +31,7 @@ export default function Projects() {
   }, [apiService]);
 
   return (
-    <WithSidebarLayout title="Projects" menuItems={menuItems} noMargin>
+    <WithSidebarLayout title="App" menuItems={sideBarItems} noMargin>
       <div className="divide-y divide-gray-300 divide-solid">
         {projects?.map((project) => (
           <ProjectTile

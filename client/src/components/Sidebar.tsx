@@ -1,11 +1,7 @@
 import { useRef, useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
+import { MenuItem } from '../api/sidebarItems';
 import { useClickOutside } from '../hooks/useClickOutside';
-
-export interface MenuItem {
-  name: string;
-  href: string;
-}
 
 interface SidebarProps {
   items: MenuItem[];

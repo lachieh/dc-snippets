@@ -1,6 +1,7 @@
 import DefaultLayout from './Default';
-import { Sidebar, MenuItem } from '../components/Sidebar';
+import { Sidebar } from '../components/Sidebar';
 import { PropsWithChildren } from 'react';
+import { MenuItem } from '../api/sidebarItems';
 
 interface Props {
   menuItems: MenuItem[];

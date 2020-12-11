@@ -14,12 +14,14 @@ export default function NavBar() {
   const location = useLocation();
   const menuItems = [
     {
-      href: '/docs',
-      name: 'Docs',
+      to: '/',
+      name: 'Home',
+      exact: true,
     },
     {
-      href: '/app',
-      name: 'App',
+      to: '/tools',
+      name: 'Tools',
+      exact: false,
     },
   ];
 
@@ -40,17 +42,19 @@ export default function NavBar() {
             <div className="hidden md:block">
               <div className="ml-4 flex items-baseline space-x-4">
                 {menuItems.map((item, index) => (
-                  <NavLink
+                  <Link
                     key={index}
-                    to={item.href}
+                    to={item.to}
                     className={`px-3 py-2 rounded-md text-sm font-medium text-white ${
-                      location.pathname.match(item.href)
+                      location.pathname.match(
+                        item.exact ? new RegExp(`^${item.to}$`) : item.to,
+                      )
                         ? 'bg-brand-darker'
                         : 'hover:bg-brand'
                     }`}
                   >
                     {item.name}
-                  </NavLink>
+                  </Link>
                 ))}
               </div>
             </div>
@@ -110,9 +114,9 @@ export default function NavBar() {
           {menuItems.map((item, index) => (
             <li key={index}>
               <Link
-                to={item.href}
+                to={item.to}
                 className={`block px-3 py-2 rounded-md text-base font-medium text-white ${
-                  location.pathname.match(item.href)
+                  location.pathname.match(item.to)
                     ? 'bg-brand-darker'
                     : 'hover:bg-brand'
                 }`}
@@ -155,6 +159,7 @@ export default function NavBar() {
           )}
           <div className="mt-3 px-2 space-y-1">
             <NavLink
+              exact
               to="/profile"
               className="block px-3 py-2 rounded-md text-base font-medium text-white hover:bg-brand"
               activeClassName="bg-brand-darker"
