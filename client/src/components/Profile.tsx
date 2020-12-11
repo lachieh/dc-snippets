@@ -1,7 +1,8 @@
-import { motion } from 'framer-motion';
+import { motion, Variants } from 'framer-motion';
 import { useRef, useState } from 'react';
 import { useClickOutside } from '../hooks/useClickOutside';
 import useApi, { User } from '../api';
+import { Link } from 'react-router-dom';
 
 interface Props {
   user: User;
@@ -13,16 +14,18 @@ export default function Profile(props: Props) {
   const { user } = props;
   const menuRef = useRef<HTMLDivElement>(null);
   const [open, setOpen] = useState(false);
-  const variants = {
+  const variants: Variants = {
     open: {
       opacity: 1,
-      transform: 'scale(1)',
-      rotate: 0,
+      top: '100%',
+      visibility: 'visible',
     },
     closed: {
       opacity: 0,
-      rotate: 5,
-      transform: 'scale(0.95)',
+      top: '50%',
+      transitionEnd: {
+        visibility: 'hidden',
+      },
     },
   };
 
@@ -55,7 +58,6 @@ export default function Profile(props: Props) {
         aria-orientation="vertical"
         aria-labelledby="user-menu"
         animate={open ? 'open' : 'closed'}
-        hidden={!open}
         initial="closed"
         variants={variants}
         transition={transition}
@@ -63,13 +65,13 @@ export default function Profile(props: Props) {
         <span className="block px-4 py-2 text-sm font-bold text-brand-dark bg-brand-light rounded-t-md">
           {user.displayName}
         </span>
-        <a
-          href="/profile"
+        <Link
+          to="/profile"
           className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
           role="menuitem"
         >
           Your Profile
-        </a>
+        </Link>
         <a
           href={logoutUrl}
           className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"

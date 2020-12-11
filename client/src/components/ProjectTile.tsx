@@ -1,5 +1,6 @@
 import CopyInput from './CopyInput';
 import { DateTime } from 'luxon';
+import Pill from './Pill';
 
 interface Props {
   title?: string;
@@ -36,59 +37,27 @@ export default function ProjectTile({
         </div>
       </div>
       <div className="flex flex-wrap text-sm">
-        <span className="flex items-center mt-1 mr-2 px-2 h-6 text-xs rounded-2xl border border-lemon-dark text-lemon-dark">
-          <svg
-            className="h-4 mr-1"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 20 20"
-            fill="currentColor"
-          >
-            <path
-              fillRule="evenodd"
-              d="M4 4a2 2 0 012-2h4.586A2 2 0 0112 2.586L15.414 6A2 2 0 0116 7.414V16a2 2 0 01-2 2H6a2 2 0 01-2-2V4zm2 6a1 1 0 011-1h6a1 1 0 110 2H7a1 1 0 01-1-1zm1 3a1 1 0 100 2h6a1 1 0 100-2H7z"
-              clipRule="evenodd"
-            />
-          </svg>
-          {snippets?.length || 0} Snippet{snippets?.length === 1 ? '' : 's'}
-        </span>
-        <span
-          className="flex items-center mt-1 mr-2 px-2 h-6 text-xs rounded-2xl border border-brand text-brand"
+        <Pill
+          icon="document"
+          color="lemon"
+          text={`${snippets?.length || 0} Snippet${
+            snippets?.length === 1 ? '' : 's'
+          }`}
+        />
+        <Pill
+          icon="calendar"
+          color="brand"
           title={`Project created on ${createdAtDateTime.toFormat('ff')}`}
-        >
-          <svg
-            className="h-4 mr-1"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 20 20"
-            fill="currentColor"
-          >
-            <path
-              fillRule="evenodd"
-              d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z"
-              clipRule="evenodd"
-            />
-          </svg>
-          {createdAtDateTime.toFormat('DD')}
-        </span>
-        <span
-          className="flex items-center mt-1 mr-2 px-2 h-6 text-xs rounded-2xl border border-rose-dark text-rose-dark"
-          title={`Project available until ${createdAtDateTime
+          text={createdAtDateTime.toFormat('DD')}
+        />
+        <Pill
+          icon="trash"
+          color="rose"
+          title={`Project created on ${createdAtDateTime
             .plus({ months: 2 })
             .toFormat('ff')}`}
-        >
-          <svg
-            className="h-4 mr-1"
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 20 20"
-            fill="currentColor"
-          >
-            <path
-              fillRule="evenodd"
-              d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
-              clipRule="evenodd"
-            />
-          </svg>
-          {createdAtDateTime.plus({ months: 2 }).toFormat('DD')}
-        </span>
+          text={createdAtDateTime.plus({ months: 2 }).toFormat('DD')}
+        />
         <span className="border-b-2 border-gray-100 mt-3 mb-2 w-full flex-grow self-center xs:mr-2 xs:w-auto"></span>
         <button
           className="flex items-center mt-1 px-2 py-1 text-xs rounded bg-rose-dark text-white hover:bg-rose-darker"

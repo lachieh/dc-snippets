@@ -2,7 +2,7 @@ import { FormEvent, useEffect, useState } from 'react';
 import WithSidebarLayout from '../../layouts/WithSidebarLayout';
 import useApi, { Project } from '../../api/index';
 import ProjectTile from '../../components/ProjectTile';
-import { sideBarItems } from '../../api/sidebarItems';
+import { sideBarItems } from './sidebarItems';
 
 export default function Snippets() {
   const [projects, setProjects] = useState<Project[]>([]);

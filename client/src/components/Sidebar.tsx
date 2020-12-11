@@ -1,10 +1,14 @@
 import { useRef, useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
-import { MenuItem } from '../api/sidebarItems';
 import { useClickOutside } from '../hooks/useClickOutside';
 
 interface SidebarProps {
   items: MenuItem[];
+}
+
+export interface MenuItem {
+  name: string;
+  href: string;
 }
 
 export function Sidebar({ items }: SidebarProps) {
@@ -22,7 +26,7 @@ export function Sidebar({ items }: SidebarProps) {
             <li key={i}>
               <NavLink
                 exact
-                className={`block font-bold text-lg px-2 py-2 mb-2 rounded-lg ${
+                className={`block font-bold text-brand text-lg px-2 py-2 mb-2 rounded-lg ${
                   location.pathname.match(item.href) ||
                   'hover:bg-brand-light hover:text-white'
                 }`}
