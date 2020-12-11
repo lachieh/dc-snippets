@@ -10,7 +10,6 @@ import {
   LessThan,
   Repository,
   UpdateResult,
-  WhereExpression,
 } from 'typeorm';
 import { User } from '../user/entities/user.entity';
 import { CreateProjectDto } from './dto/create-project.dto';
@@ -26,6 +25,7 @@ export class ProjectService {
   findAllByUser(user: User, eager = true): Promise<Project[]> {
     return this.projectRepository.find({
       where: { user, deletedAt: IsNull() },
+      order: { createdAt: 'DESC' },
       relations: eager ? ['snippets'] : [],
     });
   }
