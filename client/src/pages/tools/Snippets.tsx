@@ -31,7 +31,7 @@ export default function Snippets() {
   }, [apiService]);
 
   return (
-    <WithSidebarLayout title="App" menuItems={sideBarItems} noMargin>
+    <WithSidebarLayout title="Tools" menuItems={sideBarItems} noMargin>
       <div className="divide-y divide-gray-300 divide-solid">
         {projects?.map((project) => (
           <ProjectTile
