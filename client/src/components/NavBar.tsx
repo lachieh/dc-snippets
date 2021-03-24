@@ -17,11 +17,19 @@ export default function NavBar() {
       to: '/',
       name: 'Home',
       exact: true,
+      private: false,
     },
     {
-      to: '/tools',
-      name: 'Tools',
+      to: '/docs',
+      name: 'Docs',
       exact: false,
+      private: false,
+    },
+    {
+      to: '/tools/snippets',
+      name: 'My Snippets',
+      exact: false,
+      private: true,
     },
   ];
 
@@ -41,21 +49,25 @@ export default function NavBar() {
             </div>
             <div className="hidden md:block">
               <div className="ml-4 flex items-baseline space-x-4">
-                {menuItems.map((item, index) => (
-                  <Link
-                    key={index}
-                    to={item.to}
-                    className={`px-3 py-2 rounded-md text-sm font-medium text-white ${
-                      location.pathname.match(
-                        item.exact ? new RegExp(`^${item.to}$`) : item.to,
-                      )
-                        ? 'bg-brand-darker'
-                        : 'hover:bg-brand'
-                    }`}
-                  >
-                    {item.name}
-                  </Link>
-                ))}
+                {menuItems.map(
+                  (item, index) =>
+                    ((user && item.private) || // private but logged in
+                      !item.private) && ( // not a private item
+                      <Link
+                        key={index}
+                        to={item.to}
+                        className={`px-3 py-2 rounded-md text-sm font-medium text-white ${
+                          location.pathname.match(
+                            item.exact ? new RegExp(`^${item.to}$`) : item.to,
+                          )
+                            ? 'bg-brand-darker'
+                            : 'hover:bg-brand'
+                        }`}
+                      >
+                        {item.name}
+                      </Link>
+                    ),
+                )}
               </div>
             </div>
           </div>

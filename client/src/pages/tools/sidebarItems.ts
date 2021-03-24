@@ -2,7 +2,11 @@ import { MenuItem } from '../../components/Sidebar';
 
 export const sideBarItems: MenuItem[] = [
   {
-    name: 'Snippets App',
+    name: 'My Snippets',
     href: '/tools/snippets',
+  },
+  {
+    name: 'API Reference',
+    href: '/api',
   },
 ];

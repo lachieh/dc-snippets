@@ -4,6 +4,12 @@ import * as helmet from 'helmet';
 import * as passport from 'passport';
 import * as session from 'express-session';
 import * as cookieParser from 'cookie-parser';
+import {
+  DocumentBuilder,
+  SwaggerDocumentOptions,
+  SwaggerModule,
+} from '@nestjs/swagger';
+import { SnippetModule } from './snippet/snippet.module';
 
 async function bootstrap() {
   if (!process.env.APP_URL) {
@@ -41,6 +47,26 @@ async function bootstrap() {
   app.use(helmet({ contentSecurityPolicy: false }));
   app.use(passport.initialize());
   app.use(passport.session());
+
+  const swaggerConfig = new DocumentBuilder()
+    .setTitle('Snippets API')
+    .setVersion('1.0')
+    .addBearerAuth({
+      type: 'apiKey',
+      description: 'Get an API key by signing in and creating a new Project',
+      name: '',
+    })
+    .build();
+  const swaggerOptions = <SwaggerDocumentOptions>{
+    include: [SnippetModule],
+  };
+  const document = SwaggerModule.createDocument(
+    app,
+    swaggerConfig,
+    swaggerOptions,
+  );
+  SwaggerModule.setup('api', app, document);
+
   await app.listen(process.env.PORT || 3001);
 }
 bootstrap();

@@ -1,5 +1,5 @@
 import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
@@ -17,14 +17,30 @@ import { CleanupModule } from './cleanup/cleanup.module';
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot({
-      type: 'postgres',
-      host: 'localhost',
-      port: 5432,
-      database: 'dc-snippets',
-      synchronize: true,
-      logging: false,
-      entities: [User, Project, Snippet],
+    TypeOrmModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
+      useFactory: (configService: ConfigService) => {
+        const entities = [User, Project, Snippet];
+        const dbUrl = configService.get('DATABASE_URL');
+        if (dbUrl) {
+          return {
+            url: configService.get('DATABASE_URL'),
+            type: 'postgres',
+            synchronize: false,
+            entities,
+          };
+        }
+        return {
+          type: 'postgres',
+          host: 'localhost',
+          port: 5432,
+          database: 'dc-snippets',
+          synchronize: true,
+          logging: false,
+          entities,
+        };
+      },
     }),
     ConfigModule.forRoot(),
     ScheduleModule.forRoot(),
