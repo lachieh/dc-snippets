@@ -30,6 +30,7 @@ console.log('serving files from: ', join(__dirname, '../.', 'client/build'))
             url: configService.get('DATABASE_URL'),
             type: 'postgres',
             synchronize: false,
+            ssl: true,
             entities,
           };
         }
