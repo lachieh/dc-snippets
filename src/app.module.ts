@@ -15,6 +15,8 @@ import { join } from 'path';
 import { ScheduleModule } from '@nestjs/schedule';
 import { CleanupModule } from './cleanup/cleanup.module';
 
+console.log('serving files from: ', join(__dirname, '../.', 'client/build'))
+
 @Module({
   imports: [
     TypeOrmModule.forRootAsync({
