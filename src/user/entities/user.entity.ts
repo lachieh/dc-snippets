@@ -1,6 +1,6 @@
 import { Profile } from 'passport-github2';
 import { Project } from '../../project/entities/project.entity';
-import { Snippet } from '../../snippet/entities/snippet.entity';
+
 import {
   Column,
   CreateDateColumn,

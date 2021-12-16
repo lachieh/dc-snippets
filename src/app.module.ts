@@ -34,7 +34,9 @@ console.log('serving files from: ', join(__dirname, '../.', 'client/build'))
               enabled: true,
               rejectUnauthorized: false
             },
-            entities,
+            entities: ['dist/**/*.entity{.ts,.js}'],
+            migrations: ['dist/migrations/**/*{.ts,.js}'],
+            cli: { migrationsDir: 'src/migrations' },
           };
         }
         return {
@@ -44,7 +46,9 @@ console.log('serving files from: ', join(__dirname, '../.', 'client/build'))
           database: 'dc-snippets',
           synchronize: true,
           logging: false,
-          entities,
+          entities: ['dist/**/*.entity{.ts,.js}'],
+          migrations: ['dist/migrations/**/*{.ts,.js}'],
+          cli: { migrationsDir: 'src/migrations' },
         };
       },
     }),
