@@ -17,6 +17,10 @@ module.exports = {
       },
       colors: {
         gray: colors.neutral,
+        // #213D48 - Dark Teal
+        // #152A2D - Darkest Teal
+        // #49A9A3 - Brand Teal
+        // #3C5761 - Dark Teal - Hover
         brand: {
           lighter: '#e3f2f2',
           light: '#8ccdca',
@@ -44,10 +48,5 @@ module.exports = {
   variants: {
     extend: {},
   },
-  plugins: [],
+  plugins: [require('@tailwindcss/typography')],
 };
-
-// #213D48 - Dark Teal
-// #152A2D - Darkest Teal
-// #49A9A3 - Brand Teal
-// #3C5761 - Dark Teal - Hover

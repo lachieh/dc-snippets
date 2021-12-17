@@ -9,6 +9,7 @@ interface SidebarProps {
 export interface MenuItem {
   name: string;
   href: string;
+  skipRouter?: boolean;
 }
 
 export function Sidebar({ items }: SidebarProps) {
@@ -22,22 +23,33 @@ export function Sidebar({ items }: SidebarProps) {
     <nav className="w-full md:w-3/12 pb-2 md:py-6 pr-0 md:pr-4">
       <div className="hidden md:block">
         <ul>
-          {items.map((item, i) => (
-            <li key={i}>
-              <NavLink
-                end
-                className={({ isActive }) =>
-                  'block font-bold text-brand text-lg px-2 py-2 mb-2 rounded-lg' +
-                  (isActive
-                    ? ' text-brand bg-brand-lighter cursor-default'
-                    : ' hover:bg-brand-light hover:text-white')
-                }
-                to={item.href}
-              >
-                {item.name}
-              </NavLink>
-            </li>
-          ))}
+          {items.map((item, i) => {
+            const isActive = location.pathname.match(item.href);
+            const className =
+              'block font-bold text-brand text-lg px-2 py-2 mb-2 rounded-lg' +
+              (isActive
+                ? ' text-brand bg-brand-lighter cursor-default'
+                : ' hover:bg-brand-light hover:text-white');
+
+            return (
+              <li key={i}>
+                {item.skipRouter ? (
+                  <a
+                    className={className}
+                    href={item.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    {item.name}
+                  </a>
+                ) : (
+                  <NavLink end className={className} to={item.href}>
+                    {item.name}
+                  </NavLink>
+                )}
+              </li>
+            );
+          })}
         </ul>
       </div>
       <div className="md:hidden" ref={menuRef}>

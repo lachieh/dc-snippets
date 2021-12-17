@@ -20,12 +20,6 @@ export default function NavBar() {
       private: false,
     },
     {
-      to: '/docs',
-      name: 'Docs',
-      strict: false,
-      private: false,
-    },
-    {
       to: '/tools/snippets',
       name: 'My Snippets',
       strict: false,

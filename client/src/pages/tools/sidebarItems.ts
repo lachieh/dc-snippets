@@ -8,5 +8,6 @@ export const sideBarItems: MenuItem[] = [
   {
     name: 'API Reference',
     href: '/api',
+    skipRouter: true,
   },
 ];
