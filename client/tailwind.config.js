@@ -1,22 +1,22 @@
 const colors = require('tailwindcss/colors');
 
 module.exports = {
-  purge: [
+  content: [
     './src/**/*.ts',
     './src/**/*.tsx',
     './src/**/*.js',
     './src/**/*.jsx',
-    './public/index.html'
+    './public/index.html',
   ],
   darkMode: 'class', // or 'media' or 'class'
   theme: {
     extend: {
       // Adds a new breakpoint in addition to the default breakpoints
       screens: {
-        'xs': '480px',
+        xs: '480px',
       },
       colors: {
-        gray: colors.trueGray,
+        gray: colors.neutral,
         brand: {
           lighter: '#e3f2f2',
           light: '#8ccdca',
@@ -36,7 +36,7 @@ module.exports = {
           light: '#e190ac',
           DEFAULT: '#cd4e76',
           dark: '#b6375d',
-          darker: '#8b2f51'
+          darker: '#8b2f51',
         },
       },
     },

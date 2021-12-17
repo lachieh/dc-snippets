@@ -23,10 +23,10 @@ export default function ProjectTile({
   return (
     <div className="py-4 px-6">
       <div className="flex flex-col sm:flex-row justify-between">
-        <h3 className="font-semibold text-brand text-lg mb-2">
+        <h3 className="font-semibold text-brand text-lg mr-12 mt-0.5 mb-2">
           {title || `Untitled Project (${id})`}
         </h3>
-        <div className="flex flex-row h-8 sm:w-1/2 mb-2">
+        <div className="flex flex-row flex-grow h-8 mb-2">
           <label
             className="text-sm mr-2 whitespace-nowrap self-center text-gray-600"
             htmlFor="apikey"

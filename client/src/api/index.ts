@@ -1,5 +1,4 @@
 import { Profile } from 'passport-github2';
-import { Types } from '../components/UserContext';
 
 class ApiService {
   url = process.env.REACT_APP_API_URL || '';
