@@ -16,19 +16,19 @@ export default function NavBar() {
     {
       to: '/',
       name: 'Home',
-      exact: true,
+      strict: true,
       private: false,
     },
     {
       to: '/docs',
       name: 'Docs',
-      exact: false,
+      strict: false,
       private: false,
     },
     {
       to: '/tools/snippets',
       name: 'My Snippets',
-      exact: false,
+      strict: false,
       private: true,
     },
   ];
@@ -53,19 +53,17 @@ export default function NavBar() {
                   (item, index) =>
                     ((user && item.private) || // private but logged in
                       !item.private) && ( // not a private item
-                      <Link
+                      <NavLink
                         key={index}
                         to={item.to}
-                        className={`px-3 py-2 rounded-md text-sm font-medium text-white ${
-                          location.pathname.match(
-                            item.exact ? new RegExp(`^${item.to}$`) : item.to,
-                          )
-                            ? 'bg-brand-darker'
-                            : 'hover:bg-brand'
-                        }`}
+                        end
+                        className={({ isActive }) =>
+                          'px-3 py-2 rounded-md text-sm font-medium text-white ' +
+                          (isActive ? 'bg-brand-darker' : 'hover:bg-brand')
+                        }
                       >
                         {item.name}
-                      </Link>
+                      </NavLink>
                     ),
                 )}
               </div>
@@ -171,10 +169,11 @@ export default function NavBar() {
           )}
           <div className="mt-3 px-2 space-y-1">
             <NavLink
-              exact
               to="/profile"
-              className="block px-3 py-2 rounded-md text-base font-medium text-white hover:bg-brand"
-              activeClassName="bg-brand-darker"
+              className={({ isActive }) =>
+                'block px-3 py-2 rounded-md text-base font-medium text-white hover:bg-brand' +
+                (isActive ? ' bg-brand-darker' : '')
+              }
             >
               Your Profile
             </NavLink>

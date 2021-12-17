@@ -25,12 +25,13 @@ export function Sidebar({ items }: SidebarProps) {
           {items.map((item, i) => (
             <li key={i}>
               <NavLink
-                exact
-                className={`block font-bold text-brand text-lg px-2 py-2 mb-2 rounded-lg ${
-                  location.pathname.match(item.href) ||
-                  'hover:bg-brand-light hover:text-white'
-                }`}
-                activeClassName="text-brand bg-brand-lighter cursor-default"
+                end
+                className={({ isActive }) =>
+                  'block font-bold text-brand text-lg px-2 py-2 mb-2 rounded-lg' +
+                  (isActive
+                    ? ' text-brand bg-brand-lighter cursor-default'
+                    : ' hover:bg-brand-light hover:text-white')
+                }
                 to={item.href}
               >
                 {item.name}

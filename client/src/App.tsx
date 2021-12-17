@@ -1,24 +1,34 @@
-import { Redirect, Route, Switch } from 'react-router-dom';
+import { Route, Navigate, Routes } from 'react-router-dom';
 import Home from './pages/Home';
 import Profile from './pages/profile/Profile';
 import { UserContextProvider } from './components/UserContext';
-import ProtectedRoute from './components/ProtectedRoute';
 import Snippets from './pages/tools/Snippets';
+import RequireAuth from './components/RequireAuth';
 
 function App() {
   return (
     <UserContextProvider>
-      <Switch>
-        <Route path="/" exact component={Home} />
-        <ProtectedRoute path="/profile" component={Profile} />
-        <ProtectedRoute path="/profile/class" component={Profile} />
-        <ProtectedRoute path="/profile/delete" component={Profile} />
-        <Redirect exact from="/tools" to="/tools/snippets" />
-        <ProtectedRoute path="/tools/snippets" component={Snippets} />
-        <Route>
-          <Redirect to="/" />
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="profile" element={<Profile />}>
+          <Route path="" element={<RequireAuth>Settings</RequireAuth>} />
+          <Route path="class" element={<RequireAuth>Class</RequireAuth>} />
+          <Route path="delete" element={<RequireAuth>Delete</RequireAuth>} />
         </Route>
-      </Switch>
+        <Route
+          path="tools"
+          element={<Navigate to="tools/snippets" replace />}
+        />
+        <Route
+          path="/tools/snippets"
+          element={
+            <RequireAuth>
+              <Snippets />
+            </RequireAuth>
+          }
+        />
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
     </UserContextProvider>
   );
 }

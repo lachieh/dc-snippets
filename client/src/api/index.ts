@@ -1,4 +1,5 @@
 import { Profile } from 'passport-github2';
+import { Types } from '../components/UserContext';
 
 class ApiService {
   url = process.env.REACT_APP_API_URL || '';
@@ -61,7 +62,7 @@ type Method = 'POST' | 'GET' | 'PUT' | 'PATCH' | 'DELETE';
 
 const apiService = new ApiService();
 
-export default function useApi() {
+export default function useApi(): ApiService {
   return apiService;
 }
 
