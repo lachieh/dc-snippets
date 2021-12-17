@@ -12,13 +12,13 @@ export class ApiKeyGuard implements CanActivate {
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const req = context.switchToHttp().getRequest();
-    if (!req.query?.apiKey) {
+    const apiKey: string = req.headers['x-api-key'] || req.query.apiKey || null;
+
+    if (!apiKey) {
       throw new UnauthorizedException('API Key Required');
     }
 
-    const project = await this.projectService.validateProject(
-      req.query.apiKey as string,
-    );
+    const project = await this.projectService.validateProject(apiKey);
 
     if (!project) {
       throw new UnauthorizedException('Invalid API Key');

@@ -6,10 +6,13 @@ import * as session from 'express-session';
 import * as cookieParser from 'cookie-parser';
 import {
   DocumentBuilder,
+  SwaggerCustomOptions,
   SwaggerDocumentOptions,
   SwaggerModule,
 } from '@nestjs/swagger';
 import { SnippetModule } from './snippet/snippet.module';
+import { ValidationPipe } from '@nestjs/common';
+import { Snippet } from './snippet/entities/snippet.entity';
 
 async function bootstrap() {
   if (!process.env.APP_URL) {
@@ -47,25 +50,38 @@ async function bootstrap() {
   app.use(helmet({ contentSecurityPolicy: false }));
   app.use(passport.initialize());
   app.use(passport.session());
+  app.useGlobalPipes(new ValidationPipe());
 
   const swaggerConfig = new DocumentBuilder()
     .setTitle('Snippets API')
     .setVersion('1.0')
-    .addBearerAuth({
+    .addTag('snippets')
+    .addSecurity('apiKeyHeader', {
       type: 'apiKey',
-      description: 'Get an API key by signing in and creating a new Project',
-      name: '',
+      in: 'header',
+      name: 'x-api-key',
+    })
+    .addSecurity('apiKeyQuery', {
+      type: 'apiKey',
+      in: 'query',
+      name: 'apiKey',
     })
     .build();
-  const swaggerOptions = <SwaggerDocumentOptions>{
+  const swaggerDocOptions = <SwaggerDocumentOptions>{
     include: [SnippetModule],
+    extraModels: [Snippet],
   };
   const document = SwaggerModule.createDocument(
     app,
     swaggerConfig,
-    swaggerOptions,
+    swaggerDocOptions,
   );
-  SwaggerModule.setup('api', app, document);
+  const swaggerCustomOptions: SwaggerCustomOptions = {
+    swaggerOptions: {
+      persistAuthorization: true,
+    },
+  };
+  SwaggerModule.setup('api', app, document, swaggerCustomOptions);
 
   await app.listen(process.env.PORT || 3001);
 }

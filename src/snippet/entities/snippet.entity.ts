@@ -8,16 +8,20 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { ApiProperty } from '@nestjs/swagger';
 
 @Entity()
 export class Snippet {
   @PrimaryGeneratedColumn()
+  @ApiProperty()
   id!: number;
 
   @Column({ nullable: true })
+  @ApiProperty()
   name?: string;
 
   @Column()
+  @ApiProperty()
   content!: string;
 
   @ManyToOne(() => Project, (project) => project.snippets, {
@@ -26,8 +30,10 @@ export class Snippet {
   project: Project;
 
   @CreateDateColumn()
+  @ApiProperty()
   createdAt!: Date;
 
   @UpdateDateColumn()
+  @ApiProperty()
   updatedAt!: Date;
 }

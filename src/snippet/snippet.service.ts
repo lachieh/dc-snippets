@@ -12,10 +12,16 @@ export class SnippetService {
     @InjectRepository(Snippet) private snippetRepository: Repository<Snippet>,
   ) {}
 
-  async create(snippetDto: CreateSnippetDto, eager = false): Promise<Snippet> {
-    const snippet = await this.snippetRepository.save(snippetDto);
+  async create(
+    project: Project,
+    createSnippetDto: CreateSnippetDto,
+    eager = false,
+  ): Promise<Snippet> {
+    const snippet: Snippet = await this.snippetRepository.save({
+      project,
+      ...createSnippetDto,
+    });
     if (!eager) {
-      delete snippet.user;
       delete snippet.project;
     }
     return snippet;

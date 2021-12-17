@@ -1,9 +1,14 @@
-import { Project } from '../../project/entities/project.entity';
-import { User } from '../../user/entities/user.entity';
+import { ApiProperty } from '@nestjs/swagger';
+import { IsNotEmpty, IsString } from 'class-validator';
 
 export class CreateSnippetDto {
-  name: string;
-  content: string;
-  project: Project;
-  user: User;
+  @IsNotEmpty()
+  @IsString()
+  @ApiProperty()
+  name!: string;
+
+  @IsNotEmpty()
+  @IsString()
+  @ApiProperty()
+  content!: string;
 }
